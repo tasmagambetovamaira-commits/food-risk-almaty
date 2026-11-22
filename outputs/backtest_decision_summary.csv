@@ -1,0 +1,4 @@
+model,seasons,MAE,RMSE,asym_loss,decision_right,bad_seasons_caught,bad_seasons_total
+climatology,12,1.647,2.84,4.786,0.667,0,4
+seasonal_mean3,12,1.96,2.68,4.145,0.5,1,4
+seasonal_naive,12,2.13,3.323,4.269,0.5,1,4
