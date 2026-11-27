@@ -21,3 +21,7 @@ We used AI to know if there are enought info for our theme and whether its relev
 **Проверили сами:** [ДОПИСАТЬ] все числа в текстах сайта сверены с outputs/eda_summary.csv, outputs/jan_apr_by_year.csv и model/artifact.json (исправлены подписи к графику товаров, сезонов и «обоих бенчмарков»); make update проходит с нуля; data/raw не меняется.
 
 A15 (27.11.2026): src/diagnostics.py — код тестов Ljung–Box, Breusch–Godfrey, Jarque–Bera, ARCH написал Claude. Мы запустили его сами, сверили p-значения и проверили, что правило выбора совпадает с пререгистрацией §6.
+
+A16 (27.11.2026): redteam/self_redteam.md — черновик атак и ответов предложил Claude; мы прочитали каждый пункт, проверили ссылки на outputs/ и согласовали ответы.
+
+A17 (27.11.2026): правило квантиля 0,75 и блок допущений на сайте — расчёт и код предложил Claude; мы проверили бэктест правил и согласились изменить рекомендацию.

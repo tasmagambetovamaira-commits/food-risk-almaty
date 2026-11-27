@@ -11,7 +11,11 @@
   "loss_under": 3,
   "loss_over": 1,
   "janapr_forecast": 4.21,
-  "signal": false
+  "signal": false,
+  "janapr_q75": 5.79,
+  "janapr_lo80": 3.81,
+  "janapr_hi80": 6.89,
+  "signal_q75": true
  },
  "series": [
   {
@@ -1192,5 +1196,57 @@
    "janapr2027_point": 3.54,
    "n_past_errors": 153
   }
- ]
+ ],
+ "season_errors": {
+  "oct": {
+   "n": 12,
+   "q10": -0.4,
+   "q50": 0.61,
+   "q75": 1.58,
+   "q90": 2.68,
+   "share_under": 0.67
+  },
+  "jan": {
+   "n": 12,
+   "q10": -0.79,
+   "q50": 0.41,
+   "q75": 1.08,
+   "q90": 3.3,
+   "share_under": 0.67
+  }
+ },
+ "decision_rules": {
+  "oct": {
+   "point": {
+    "hits": 0,
+    "false": 0,
+    "miss": 3,
+    "loss": 9,
+    "seasons": 9
+   },
+   "q75": {
+    "hits": 3,
+    "false": 6,
+    "miss": 0,
+    "loss": 6,
+    "seasons": 9
+   }
+  },
+  "jan": {
+   "point": {
+    "hits": 0,
+    "false": 0,
+    "miss": 3,
+    "loss": 9,
+    "seasons": 9
+   },
+   "q75": {
+    "hits": 2,
+    "false": 3,
+    "miss": 1,
+    "loss": 6,
+    "seasons": 9
+   }
+  }
+ }
 }

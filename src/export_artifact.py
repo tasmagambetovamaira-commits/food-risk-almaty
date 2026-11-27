@@ -82,6 +82,31 @@ def main():
                "threshold": r(d.threshold), "signal": bool(d.signal), "bad": bool(d.bad_season)}
               for d in dec.itertuples()]
 
+    # 6b. Ошибки прогноза сезона (факт − прогноз) для правила квантиля 0,75 (ответ на red-team А3).
+    #     При потере 3:1 оптимальная оценка — квантиль 3/(3+1) = 0,75 распределения прогноза.
+    #     Распределение берём эмпирически: прогноз + прошлые ошибки прогноза сезона из того же месяца.
+    season_err = {}
+    rules = {}
+    for when in ["oct", "jan"]:
+        dd = pd.read_csv(OUTD / f"model_backtest_decision_{when}.csv").query("model == 'ar1_seasonal'").reset_index(drop=True)
+        e = dd.actual - dd.forecast
+        season_err[when] = {"n": int(len(e)), "q10": r(np.quantile(e, 0.10)), "q50": r(np.quantile(e, 0.50)),
+                            "q75": r(np.quantile(e, 0.75)), "q90": r(np.quantile(e, 0.90)),
+                            "share_under": r((e > 0).mean())}
+        # Бэктест двух правил решения; квантиль — только по ошибкам прошлых сезонов (без утечки)
+        stats = {"point": [0, 0, 0], "q75": [0, 0, 0]}  # пойманы, ложные тревоги, пропуски
+        for i, row in dd.iterrows():
+            if i < 3:
+                continue
+            for rule in stats:
+                add = np.quantile(e[:i], 0.75) if rule == "q75" else 0.0
+                sig, bad = row.forecast + add > row.threshold, bool(row.bad_season)
+                stats[rule][0] += sig and bad
+                stats[rule][1] += sig and not bad
+                stats[rule][2] += (not sig) and bad
+        rules[when] = {k: {"hits": int(v[0]), "false": int(v[1]), "miss": int(v[2]),
+                           "loss": int(3 * v[2] + v[1]), "seasons": int(len(dd) - 3)} for k, v in stats.items()}
+
     # 7. Пререгистрация
     rc = pd.read_csv("prereg/reality_check_forecast.csv")
     prereg = [{k: (r(v) if isinstance(v, float) else v) for k, v in row.items()} for row in rc.to_dict("records")]
@@ -99,7 +124,14 @@ def main():
         "model": {"name": "ar1_seasonal", "m": m, "phi": phi,
                   "last_growth": r(df["food_almaty"].iloc[-1]), "last_month": origin.month},
         "quality_h1": quality, "decision_record": record, "prereg": prereg,
+        "season_errors": season_err, "decision_rules": rules,
     }
+    ja_point = cumulative(fc.loc["2027-01":"2027-04"])
+    art["decision"]["janapr_q75"] = r(ja_point + season_err["oct"]["q75"])
+    art["decision"]["janapr_lo80"] = r(ja_point + season_err["oct"]["q10"])
+    art["decision"]["janapr_hi80"] = r(ja_point + season_err["oct"]["q90"])
+    art["decision"]["signal_q75"] = bool(ja_point + season_err["oct"]["q75"] > THRESHOLD)
+
     OUT.parent.mkdir(exist_ok=True)
     OUT.write_text(json.dumps(art, ensure_ascii=False, indent=1), encoding="utf-8")
     # Копия для сайта: работает и при открытии index.html двойным кликом (file://)
@@ -111,7 +143,8 @@ def main():
     assert abs(fc.iloc[0] - frozen.nov2026_point) < 0.01 or origin.strftime("%Y-%m") != "2026-10", \
         "Прогноз на ноябрь расходится с пререгистрацией"
     print(f"OK: {OUT} ({OUT.stat().st_size // 1024} КБ), данные по {art['meta']['data_through']}, "
-          f"январь–апрель 2027 = {art['decision']['janapr_forecast']}%, сигнал = {art['decision']['signal']}")
+          f"январь–апрель 2027 = {art['decision']['janapr_forecast']}%, сигнал = {art['decision']['signal']}; "
+          f"квантиль 0,75 = {art['decision']['janapr_q75']}%, сигнал по квантилю = {art['decision']['signal_q75']}")
 
 
 if __name__ == "__main__":

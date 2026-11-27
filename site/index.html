@@ -217,16 +217,11 @@
   <main>
     <header>
       <div class="kicker">The Decision Desk · DAEF · KBTU · данные по <span id="thru">…</span></div>
-      <h1>Межсезонье в Алматы: стабфонду пока не нужно докупать запасы сверх обычного</h1>
-      <p class="lead">Прогноз роста цен на продукты за январь–апрель 2027 — <b id="hJA">…</b> при пороге «плохого
-        сезона» <b>4,88%</b>. Решение пересматриваем в начале февраля по январским данным.</p>
-    </header>
+      <h1>Межсезонье в Алматы: стабфонду стоит подготовить страховку сейчас, а решение о закупке принять в феврале</h1>
+  <p class="lead">Центральный прогноз роста цен на продукты за январь–апрель 2027 — <b id="hJA">…</b>, ниже порога «плохого сезона» <b>4,88%</b>. Но модель в 2 сезонах из 3 недооценивала рост, а недооценка обходится втрое дороже. С учётом цены ошибки оценка — <b id="hQ">…</b>, выше порога.</p>
+</header>
 
-    <p><i>English summary for marking:</i> A forecasting desk for the Almaty stabilisation fund (SPK «Almaty»).
-      Question: will food prices in Almaty rise more than 4.88% in January–April (75th percentile of past seasons),
-      which would justify extra stock purchases? Our seasonal AR(1) model forecasts <span id="enJA">…</span>, below the
-      threshold, and beats all three benchmarks out of sample at the 1-month horizon. It cannot foresee external shocks such
-      as March 2022.</p>
+    <p><i>English summary for marking:</i> A forecasting desk for the Almaty stabilisation fund (SPK «Almaty»). Question: will food prices in Almaty rise more than 4.88% in January–April (75th percentile of past seasons), which would justify extra stock purchases? Our seasonal AR(1) model forecasts <span id="enJA">…</span> (point), below the threshold, but its 0.75 quantile — the optimal estimate under our 3:1 loss — is <span id="enQ">…</span>, above it. Recommendation: arrange cheap insurance now (framework supply contracts), decide on physical purchases in early February. The model beats all three benchmarks out of sample at the 1-month horizon and cannot foresee external shocks such as March 2022.</p>
 
     <!-- BEAT 1 -->
     <h2><span class="n">1</span>Решение: докупать ли запасы к весне</h2>
@@ -285,21 +280,12 @@
     <!-- BEAT 4 -->
     <h2><span class="n">4</span>Прогноз и наш послужной список</h2>
     <div class="tiles">
-      <div class="tile">
-        <div class="lbl">Январь–апрель 2027, прогноз</div>
-        <div class="big" id="tJA">…</div>
-      </div>
-      <div class="tile">
-        <div class="lbl">Порог «плохого сезона»</div>
-        <div class="big">4,88%</div>
-      </div>
-      <div class="tile">
-        <div class="lbl">Ноябрь 2026 (заморожен)</div>
-        <div class="big" id="tNov">…</div>
-        <div class="lbl" id="tNovI"></div>
-      </div>
-    </div>
-    <p>Ноябрьский прогноз заморожен в <a
+  <div class="tile"><div class="lbl">Январь–апрель 2027, центральный прогноз</div><div class="big" id="tJA">…</div><div class="lbl" id="tJAI"></div></div>
+  <div class="tile"><div class="lbl">С учётом цены ошибки (квантиль 0,75)</div><div class="big" id="tQ">…</div></div>
+  <div class="tile"><div class="lbl">Порог «плохого сезона»</div><div class="big">4,88%</div></div>
+  <div class="tile"><div class="lbl">Ноябрь 2026 (заморожен)</div><div class="big" id="tNov">…</div><div class="lbl" id="tNovI"></div></div>
+</div>
+<p>Ноябрьский прогноз заморожен в <a
         href="https://github.com/tasmagambetovamaira-commits/food-risk-almaty/blob/main/prereg/prereg.md">пререгистрации</a>
       до публикации факта (БНС, начало декабря). Здесь появится сравнение с фактом.</p>
 
@@ -335,10 +321,12 @@
         <tbody></tbody>
       </table>
     </div>
-    <p>Порог каждого сезона считается только по прошлым годам. Из 4 плохих сезонов модель поймала один (2016); 2020 и
-      2022 — шоки, случившиеся после января.</p>
+    <p>Порог каждого сезона считается только по прошлым годам. По центральному прогнозу модель почти не поднимает тревогу: плохие сезоны она пропускает, потому что систематически занижает рост сезона (медианная ошибка прогноза из октября <span id="medErr"></span> п.п., занижение в 8 сезонах из 12).</p>
+<h3>Какое правило решения лучше: точка или квантиль 0,75</h3>
+<div class="tblwrap"><table id="tblRule"><thead><tr><th>Правило (прогноз из октября)</th><th>Поймано</th><th>Ложные тревоги</th><th>Пропущено</th><th>Потеря 3:1</th></tr></thead><tbody></tbody></table></div>
+<p id="ruleTxt" style="font-size:14px;color:var(--muted)"></p>
 
-    <!-- BEAT 5 -->
+<!-- BEAT 5 -->
     <h2><span class="n">5</span>Механизм: что двигает прогноз</h2>
     <p>Модель: рост месяца = сезонная норма месяца + <b id="phiTxt">0,45</b> × рост прошлого месяца. Половина «сюрприза»
       переносится на следующий месяц и затухает. Подвигайте допущения:</p>
@@ -347,8 +335,18 @@
     <label for="sShock">Внешний шок: дополнительный рост каждый месяц января–апреля: <span class="out"
         id="vShock"></span></label>
     <input type="range" id="sShock" min="0" max="3" step="0.1" value="0">
-    <p class="summary" aria-live="polite">Январь–апрель 2027: <b class="out" id="vJA"></b> → <span id="vSig"></span></p>
-    <p style="font-size:14px;color:var(--muted)">Для сравнения: в марте 2022 шок дал +5,5 п.п. за один месяц.</p>
+    <p class="summary" aria-live="polite">Январь–апрель 2027: центральный прогноз <b class="out" id="vJA"></b>, с учётом цены ошибки <b class="out" id="vQ"></b> → <span id="vSig"></span></p>
+<details>
+  <summary><b>Допущения модели</b> (что нужно, чтобы прогноз был верен)</summary>
+  <ul>
+    <li>Сезонная норма каждого месяца такая же, как в среднем в 2011–2026 (<span id="asM"></span>).</li>
+    <li>«Память» φ = <span id="asPhi"></span>: каждый месяц переносит около 45% сюрприза прошлого месяца.</li>
+    <li>Нет нового внешнего шока (курс, война, пандемия) — это задаёт второй слайдер.</li>
+    <li>Курсы и мировые цены не входят в модель: они не улучшили прогноз в бэктесте.</li>
+    <li>Квантиль 0,75 = центральный прогноз + 75-й процентиль прошлых ошибок прогноза сезона (<span id="asN"></span> сезонов) — выборка маленькая, оценка грубая.</li>
+  </ul>
+</details>
+<p style="font-size:14px;color:var(--muted)">Для сравнения: в марте 2022 шок дал +5,5 п.п. за один месяц.</p>
 
     <!-- BEAT 6 -->
     <h2><span class="n">6</span>Риск: где мы ошибались</h2>
@@ -359,16 +357,14 @@
       за месяц — пересчитать прогноз сразу, не дожидаясь февраля.</p>
 
     <!-- BEAT 7 -->
-    <h2><span class="n">7</span>Что делать</h2>
-    <div class="summary">
-      <p><b>Сейчас:</b> закупать в обычном объёме, без дополнительного резерва — прогноз <span id="aJA">…</span> ниже
-        порога 4,88%.</p>
-      <p><b>В начале февраля:</b> обновить прогноз по январскому ИПЦ. Если он превысит 4,88% — запускать дополнительные
-        интервенции по моркови, капусте, картофелю и луку.</p>
-      <p><b>В любой момент:</b> внеочередной пересмотр при сигналах из блока 6.</p>
-    </div>
+<h2><span class="n">7</span>Что делать</h2>
+<div class="summary">
+  <p><b>Сейчас (ноябрь–декабрь):</b> не закупать физически сверх обычного объёма — центральный прогноз <span id="aJA">…</span> ниже порога. Но с учётом цены ошибки оценка <span id="aQ">…</span> — поэтому заключить рамочные договоры с поставщиками овощей (морковь, капуста, картофель, лук): дешёвая страховка без затрат на хранение.</p>
+  <p><b>В начале февраля:</b> обновить прогноз по январскому ИПЦ. Если квантиль 0,75 выше 4,88% — исполнять договоры и запускать интервенции; если ниже — договоры не исполнять.</p>
+  <p><b>В любой момент:</b> внеочередной пересмотр при сигналах из блока 6.</p>
+</div>
 
-    <footer>
+<footer>
       <p>Команда: Майра, Айтуар · Курс DAEF, KBTU Business School, 2026.</p>
       <p>Источники: БНС АСПиР РК («Талдау»), FAO Food Price Index, Национальный Банк РК. Каждое число — в <a
           href="https://github.com/tasmagambetovamaira-commits/food-risk-almaty/blob/main/ledger/evidence_ledger.csv">evidence
@@ -436,7 +432,21 @@
       document.getElementById("thru").textContent = A.meta.data_through;
       document.getElementById("built").textContent = A.meta.built;
       ["hJA", "tJA", "aJA"].forEach(id => document.getElementById(id).textContent = pct(D.janapr_forecast));
+      ["hQ", "tQ", "aQ"].forEach(id => document.getElementById(id).textContent = pct(D.janapr_q75));
+      document.getElementById("tJAI").textContent = `80%: ${fmt(D.janapr_lo80, 2)} … ${fmt(D.janapr_hi80, 2)}`;
       document.getElementById("enJA").textContent = D.janapr_forecast.toFixed(2) + "%";
+      document.getElementById("enQ").textContent = D.janapr_q75.toFixed(2) + "%";
+      const SE = A.season_errors.oct;
+      document.getElementById("medErr").textContent = "+" + fmt(SE.q50, 2);
+      document.getElementById("asPhi").textContent = fmt(M.phi, 2);
+      document.getElementById("asN").textContent = SE.n;
+      document.getElementById("asM").textContent = "янв " + fmt(M.m[0], 2) + ", июл " + fmt(M.m[6], 2) + ", дек " + fmt(M.m[11], 2) + " п.п.";
+      const tRule = document.querySelector("#tblRule tbody"), RL = A.decision_rules.oct;
+      [["point", "Центральный прогноз > порога"], ["q75", "Квантиль 0,75 > порога"]].forEach(([k, lbl]) => {
+        const v = RL[k];
+        tRule.insertAdjacentHTML("beforeend", `<tr><td>${lbl}</td><td>${v.hits}</td><td>${v.false}</td><td>${v.miss}</td><td>${v.loss}</td></tr>`);
+      });
+      document.getElementById("ruleTxt").textContent = `Сезоны ${2026 - RL.point.seasons + 1}–2026 (${RL.point.seasons} сезонов). Потеря = 3 × пропуски + 1 × ложные тревоги. Квантиль считается только по ошибкам прошлых сезонов. Из октября правило квантиля даёт тревогу всегда (9 сезонов из 9) — поэтому в октябре дешёвая страховка, а решение о закупке — в феврале.`;
       document.getElementById("phiTxt").textContent = fmt(M.phi, 2);
 
       // Графики
@@ -482,13 +492,14 @@
           y = M.m[mth - 1] + M.phi * y + (mth <= 4 ? shock : 0);
           if (mth <= 4) cum *= 1 + y / 100;
         }
-        const ja = (cum - 1) * 100, sig = ja > D.threshold;
+        const ja = (cum - 1) * 100, q = ja + SE.q75, sig = q > D.threshold;
         document.getElementById("vNov").textContent = pct(nov, 1);
         document.getElementById("vShock").textContent = "+" + fmt(shock, 1) + " п.п.";
         document.getElementById("vJA").textContent = pct(ja);
+        document.getElementById("vQ").textContent = pct(q);
         document.getElementById("vSig").innerHTML = sig
-          ? `<span class="pill" style="background:${C.orange}">выше порога — готовить закупки</span>`
-          : `<span class="pill" style="background:${C.blue}">ниже порога — обычный объём</span>`;
+          ? `<span class="pill" style="background:${C.orange}">выше порога — нужна страховка</span>`
+          : `<span class="pill" style="background:${C.blue}">ниже порога даже с запасом — обычный объём</span>`;
       }
       sNov.oninput = sShock.oninput = run; run();
     }).catch(e => {
