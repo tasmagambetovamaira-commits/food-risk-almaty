@@ -1,518 +1,282 @@
 <!DOCTYPE html>
 <html lang="ru">
-
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Межсезонье в Алматы: докупать ли запасы? — The Decision Desk</title>
-  <meta name="description"
-    content="Прогноз роста цен на продукты в Алматы в январе–апреле для решения стабфонда СПК «Алматы».">
-  <style>
-    :root {
-      --ink: #1a1a1a;
-      --muted: #5c5c5c;
-      --line: #d9d9d9;
-      --bg: #fbfaf7;
-      --card: #fff;
-      /* Okabe–Ito: безопасно для дальтоников */
-      --blue: #0072B2;
-      --orange: #D55E00;
-      --grey: #8a8a8a;
-      --sky: #56B4E9;
-      --green: #009E73;
-    }
-
-    * {
-      box-sizing: border-box
-    }
-
-    body {
-      margin: 0;
-      font: 16px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-      color: var(--ink);
-      background: var(--bg)
-    }
-
-    main {
-      max-width: 760px;
-      margin: 0 auto;
-      padding: 20px 16px 60px
-    }
-
-    header {
-      border-bottom: 2px solid var(--ink);
-      padding-bottom: 12px;
-      margin-bottom: 8px
-    }
-
-    .kicker {
-      font-size: 13px;
-      letter-spacing: .06em;
-      text-transform: uppercase;
-      color: var(--muted)
-    }
-
-    h1 {
-      font-size: clamp(24px, 5vw, 34px);
-      line-height: 1.2;
-      margin: 6px 0 8px
-    }
-
-    h2 {
-      font-size: 21px;
-      margin: 36px 0 8px;
-      line-height: 1.3
-    }
-
-    h2 .n {
-      display: inline-block;
-      min-width: 28px;
-      color: var(--blue)
-    }
-
-    h3 {
-      font-size: 16px;
-      margin: 20px 0 4px
-    }
-
-    p {
-      margin: 8px 0
-    }
-
-    .lead {
-      font-size: 18px
-    }
-
-    .summary {
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-left: 4px solid var(--blue);
-      padding: 12px 14px;
-      margin: 14px 0
-    }
-
-    .big {
-      font-size: 34px;
-      font-weight: 700;
-      line-height: 1.1
-    }
-
-    .tiles {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 10px;
-      margin: 12px 0
-    }
-
-    .tile {
-      background: var(--card);
-      border: 1px solid var(--line);
-      padding: 10px 12px
-    }
-
-    .tile .lbl {
-      font-size: 13px;
-      color: var(--muted)
-    }
-
-    figure {
-      margin: 14px 0;
-      background: var(--card);
-      border: 1px solid var(--line);
-      padding: 12px
-    }
-
-    figcaption {
-      font-size: 13px;
-      color: var(--muted);
-      margin-top: 6px
-    }
-
-    .ctitle {
-      font-weight: 650;
-      margin: 0 0 6px
-    }
-
-    svg {
-      width: 100%;
-      height: auto;
-      display: block
-    }
-
-    svg text {
-      font-size: 11px;
-      fill: var(--muted)
-    }
-
-    table {
-      border-collapse: collapse;
-      width: 100%;
-      font-size: 14px;
-      background: var(--card)
-    }
-
-    th,
-    td {
-      border-bottom: 1px solid var(--line);
-      padding: 6px 8px;
-      text-align: right
-    }
-
-    th:first-child,
-    td:first-child {
-      text-align: left
-    }
-
-    .tblwrap {
-      overflow-x: auto
-    }
-
-    .yes {
-      color: var(--green);
-      font-weight: 600
-    }
-
-    .no {
-      color: var(--orange);
-      font-weight: 600
-    }
-
-    label {
-      display: block;
-      font-weight: 600;
-      margin-top: 12px
-    }
-
-    input[type=range] {
-      width: 100%
-    }
-
-    .out {
-      font-variant-numeric: tabular-nums
-    }
-
-    .pill {
-      display: inline-block;
-      padding: 2px 8px;
-      border-radius: 10px;
-      font-weight: 700;
-      color: #fff
-    }
-
-    footer {
-      margin-top: 40px;
-      border-top: 1px solid var(--line);
-      padding-top: 12px;
-      font-size: 13px;
-      color: var(--muted)
-    }
-
-    a {
-      color: var(--blue)
-    }
-
-    nav {
-      font-size: 14px;
-      margin-bottom: 12px
-    }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Межсезонье: насколько подорожают продукты в Алматы весной 2027</title>
+<meta name="description" content="Прогноз роста цен на продукты в Алматы на январь–апрель 2027 и рекомендация для городского стабилизационного фонда.">
+<meta name="theme-color" content="#0B1118">
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-  <main>
-    <nav><b>Главная</b> · <a href="methods.html">Методы и ограничения</a> · <a href="run.html">Запустить самому</a></nav>
-    <header>
-      <div class="kicker">The Decision Desk · DAEF · KBTU · данные по <span id="thru">…</span></div>
-      <h1>Межсезонье в Алматы: стабфонду стоит подготовить страховку сейчас, а решение о закупке принять в феврале</h1>
-  <p class="lead">Центральный прогноз роста цен на продукты за январь–апрель 2027 — <b id="hJA">…</b>, ниже порога «плохого сезона» <b>4,88%</b>. Но модель в 2 сезонах из 3 недооценивала рост, а недооценка обходится втрое дороже. С учётом цены ошибки оценка — <b id="hQ">…</b>, выше порога.</p>
+<nav class="site-nav" aria-label="Разделы сайта">
+  <div class="wrap">
+    <a class="brand" href="index.html">Межсезонье</a>
+    <a class="nav" href="index.html" aria-current="page">Главное</a>
+    <a class="nav" href="forecast.html">Прогноз и точность</a>
+    <a class="nav" href="methods.html">Методы и ограничения</a>
+    <a class="nav" href="run.html">Запустить самому</a>
+  </div>
+</nav>
+
+<main>
+<!-- Первый экран -->
+<header class="hero">
+  <div class="wrap">
+    <p class="hero-q">Насколько подорожают продукты в Алматы с января по апрель 2027 года?</p>
+    <p class="hero-num" aria-label="Прогноз роста цен"><span id="heroNum">0,00</span><small>%</small></p>
+    <p class="hero-sub">Это наш прогноз. Он ниже порога, после которого городу нужны запасы. Но модель обычно недооценивает весну — а такая ошибка стоит втрое дороже.</p>
+    <div class="hero-pair">
+      <div><div class="n v-thr">…</div><div class="l">порог дорогой весны: так дорожало в 1 сезоне из 4</div></div>
+      <div class="risk"><div class="n v-q75">…</div><div class="l">прогноз с поправкой на привычную ошибку модели — выше порога</div></div>
+    </div>
+    <p class="hero-cue">Ниже — почему так и что с этим делать</p>
+  </div>
 </header>
 
-    <p><i>English summary for marking:</i> A forecasting desk for the Almaty stabilisation fund (SPK «Almaty»). Question: will food prices in Almaty rise more than 4.88% in January–April (75th percentile of past seasons), which would justify extra stock purchases? Our seasonal AR(1) model forecasts <span id="enJA">…</span> (point), below the threshold, but its 0.75 quantile — the optimal estimate under our 3:1 loss — is <span id="enQ">…</span>, above it. Recommendation: arrange cheap insurance now (framework supply contracts), decide on physical purchases in early February. The model beats all three benchmarks out of sample at the 1-month horizon and cannot foresee external shocks such as March 2022.</p>
+<!-- 1. Решение -->
+<section class="chapter wrap" id="decision">
+  <p class="chapter-num">Часть 1. Решение</p>
+  <h2>Городу нужно решить, запасать ли продукты к весне</h2>
+  <p class="lead">Стабилизационный фонд СПК «Алматы» закупает продукты и продаёт их по сниженным ценам, когда цены растут. Мало запасов — весной переплачивают все. Слишком много — город тратит деньги на хранение.</p>
+  <dl class="facts">
+    <div><dt>Кто решает</dt><dd>стабфонд СПК «Алматы»</dd></div>
+    <div><dt>Когда</dt><dd>осенью — договоры с поставщиками, в начале февраля — закупка</dd></div>
+    <div><dt>Как решают сейчас</dt><dd>«весна будет как прошлая»</dd></div>
+    <div><dt>Правило</dt><dd>рост за январь–апрель выше <span class="v-thr">…</span> — готовить запасы</dd></div>
+    <div><dt>Цена ошибки</dt><dd>пропустить подорожание в 3 раза хуже, чем запасти лишнее</dd></div>
+  </dl>
+</section>
 
-    <!-- BEAT 1 -->
-    <h2><span class="n">1</span>Решение: докупать ли запасы к весне</h2>
-    <p><b>Кто решает:</b> стабилизационный фонд СПК «Алматы» — закупает продукты осенью и выпускает их по сниженным
-      ценам в межсезонье.</p>
-    <p><b>Когда:</b> предварительно — в октябре–ноябре (закупка урожая); окончательно — в начале февраля, после
-      публикации январского ИПЦ.</p>
-    <p><b>Без нас:</b> фонд ориентируется на прошлый сезон («как в прошлом году»). Это наш бенчмарк <i>seasonal
-        naive</i>.</p>
-    <p><b>Правило:</b> если прогноз роста цен за январь–апрель выше <b>4,88%</b> — готовить дополнительные закупки и
-      интервенции.</p>
-    <p><b>Цена ошибки:</b> недооценить рост в 3 раза хуже, чем переоценить. Не закупили — дорожает для всех горожан;
-      закупили лишнее — платит бюджет за хранение. Поэтому оцениваем модели асимметричной потерей 3:1.</p>
+<!-- 2. Напряжение -->
+<section class="chapter wrap" id="tension">
+  <p class="chapter-num">Часть 2. Что не так с очевидным</p>
+  <h2>Винят курс и мировые цены. Но весной дорожает своё</h2>
+  <p class="statement">Зимой заканчиваются местные запасы овощей — и с декабря по апрель цены растут <em>каждый год</em>.</p>
+  <figure class="chart">
+    <p class="ctitle">Обычный рост цен на продукты за месяц, %</p>
+    <svg id="chCalendar" role="img" aria-labelledby="chCalendarT"><title id="chCalendarT">Столбцы по месяцам: цены растут быстрее всего с декабря по февраль и почти не растут в июле и августе. Окно январь–апрель выделено.</title></svg>
+    <figcaption>Алматы, медиана 2011–2026 без шоковых лет 2015, 2016, 2022. Источник: БНС, «Талдау».</figcaption>
+  </figure>
+  <figure class="chart">
+    <p class="ctitle" id="tItems">…</p>
+    <svg id="chItems" role="img" aria-labelledby="chItemsT"><title id="chItemsT">Медианный рост цен за январь–апрель по товарам в Алматы: сильнее всего дорожают овощи.</title></svg>
+    <figcaption>Медианный рост за январь–апрель, %, без шоковых лет. Источник: БНС, «Талдау».</figcaption>
+  </figure>
+  <p>Мировой индекс цен на продовольствие (FAO) овощи не включает вовсе. Мы проверили: если добавить в модель курс и мировые цены, прогноз становится <b>хуже</b> — ошибка <span id="maeDrv">…</span> против <span id="maeOur">…</span> п.п.</p>
+</section>
 
-    <!-- BEAT 2 -->
-    <h2><span class="n">2</span>Напряжение: инфляцию продуктов объясняют мировыми ценами и тенге — но межсезонье не про
-      это</h2>
-    <p>Очевидная версия: цены на продукты растут из-за мирового рынка и курса. Но индекс мировых цен FAO не включает
-      овощи, а в Алматы весенний рост делают именно овощи. В нашем бэктесте курсы и FAO <b>не улучшили</b> прогноз —
-      модель с ними ошибалась сильнее (MAE 0,63 против 0,48).</p>
-
-    <!-- BEAT 3 -->
-    <h2><span class="n">3</span>Факты</h2>
-
-    <figure>
-      <p class="ctitle">Обычный сезон — около 4%; выше порога 4,88% — только 4 сезона из 16, а 2022 — единственный
-        экстремум</p>
-      <svg id="chSeasons" role="img" aria-labelledby="chSeasonsAlt">
-        <title id="chSeasonsAlt">Столбцы: рост цен на продукты в Алматы за январь–апрель по годам 2011–2026. Пунктир —
-          порог 4,88%. Большинство лет 1–5%, 2011 — 7,1%, 2020 — 6,0%, 2022 — 12,1%, 2023 — 5,1%.</title>
-      </svg>
-      <figcaption>Накопленный рост за январь–апрель, %. Оранжевые — выше порога. Источник: БНС, «Талдау»; расчёт:
-        src/explore.py.</figcaption>
-    </figure>
-
-    <figure>
-      <p class="ctitle">Весной дорожают овощи: капуста и картофель — на 22%, лук — на 16%, морковь — на 12%, остальное — до 4%</p>
-      <svg id="chItems" role="img" aria-labelledby="chItemsAlt">
-        <title id="chItemsAlt">Горизонтальные столбцы: медианный рост цен за январь–апрель по товарам в Алматы. Капуста
-          22,4%, картофель 22,0%, лук 16,1%, морковь 12,4%, остальные товары ниже 4% (мука 3,7%, сахар 2,7%).</title>
-      </svg>
-      <figcaption>Медиана роста за январь–апрель, %, без шоковых лет 2015, 2016, 2022. Источник: БНС, «Талдау».
-      </figcaption>
-    </figure>
-
-    <figure>
-      <p class="ctitle">Цены растут с октября по апрель и замирают летом, когда приходит урожай</p>
-      <svg id="chProfile" role="img" aria-labelledby="chProfileAlt">
-        <title id="chProfileAlt">Столбцы: медианный рост цен на продукты в Алматы по месяцам. Январь 1,0%, февраль 1,2%,
-          июль–август 0%, декабрь 1,1%.</title>
-      </svg>
-      <figcaption>Медианный рост за месяц, %, 2011–2026 без шоковых лет 2015, 2016, 2022. Источник: БНС, «Талдау».
-      </figcaption>
-    </figure>
-
-    <!-- BEAT 4 -->
-    <h2><span class="n">4</span>Прогноз и наш послужной список</h2>
-    <div class="tiles">
-  <div class="tile"><div class="lbl">Январь–апрель 2027, центральный прогноз</div><div class="big" id="tJA">…</div><div class="lbl" id="tJAI"></div></div>
-  <div class="tile"><div class="lbl">С учётом цены ошибки (квантиль 0,75)</div><div class="big" id="tQ">…</div></div>
-  <div class="tile"><div class="lbl">Порог «плохого сезона»</div><div class="big">4,88%</div></div>
-  <div class="tile"><div class="lbl">Ноябрь 2026 (заморожен)</div><div class="big" id="tNov">…</div><div class="lbl" id="tNovI"></div></div>
-</div>
-<p>Ноябрьский прогноз заморожен в <a
-        href="https://github.com/tasmagambetovamaira-commits/food-risk-almaty/blob/main/prereg/prereg.md">пререгистрации</a>
-      до публикации факта (БНС, начало декабря). Здесь появится сравнение с фактом.</p>
-
-    <h3>Точность на истории: прогноз на 1 месяц, 2014–2026, 153 прогноза</h3>
-    <div class="tblwrap">
-      <table id="tblQ">
-        <thead>
-          <tr>
-            <th>Модель</th>
-            <th>MAE, п.п.</th>
-            <th>Потеря 3:1</th>
-            <th>Покрытие 80%</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
+<!-- 3–4. Факты и прогноз: липкий график -->
+<section class="wrap" id="evidence" aria-label="Факты и прогноз">
+  <div class="chapter" style="padding-bottom:0">
+    <p class="chapter-num">Часть 3. Факты</p>
+    <h2>16 вёсен в одном графике</h2>
+  </div>
+  <div class="scrolly">
+    <div class="scrolly-steps">
+      <div class="step" data-step="1"><div class="step-card">
+        <p class="k">Факты</p><h3>Каждая весна дорожает</h3>
+        <p>Каждый столбец — насколько подорожали продукты с января по апрель. Обычная весна — около <span class="v-med">…</span>.</p>
+      </div></div>
+      <div class="step" data-step="2"><div class="step-card">
+        <p class="k">Факты</p><h3>Порог дорогой весны</h3>
+        <p id="sThr">…</p>
+      </div></div>
+      <div class="step" data-step="3"><div class="step-card">
+        <p class="k">Факты</p><h3>2022 — шок, которого не ждал никто</h3>
+        <p>Цены выросли на 12% за четыре месяца — втрое больше нормы. Половина роста пришлась на один март (+6,1%): война в Украине, санкции, ослабление тенге.</p>
+      </div></div>
+      <div class="step" data-step="4"><div class="step-card">
+        <p class="k">Прогноз</p><h3>Весна 2027: <span class="v-point">…</span></h3>
+        <p>Если всё пойдёт как обычно. В 8 случаях из 10 рост будет от <span id="lo80">…</span> до <span id="hi80">…</span>.</p>
+      </div></div>
+      <div class="step" data-step="5"><div class="step-card">
+        <p class="k">Прогноз</p><h3>С поправкой — <span class="v-q75">…</span></h3>
+        <p>В <span id="shareUnder">…</span> прошлых сезонов модель занижала весенний рост. Если прибавить её типичную ошибку, прогноз выходит за порог.</p>
+        <p>Недооценка стоит втрое дороже, поэтому решаем по этому числу.</p>
+      </div></div>
     </div>
-    <p>Наша модель лучше всех трёх бенчмарков. Покрытие интервала 87% — чуть шире номинала: модель осторожна.</p>
-
-    <h3>Решения в прошлом: прогноз из января против факта</h3>
-    <div class="tblwrap">
-      <table id="tblR">
-        <thead>
-          <tr>
-            <th>Сезон</th>
-            <th>Прогноз</th>
-            <th>Факт</th>
-            <th>Порог</th>
-            <th>Сигнал</th>
-            <th>Плохой?</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
+    <div class="scrolly-stage" aria-hidden="false">
+      <p class="stage-title" id="stageTitle">Рост цен на продукты за январь–апрель, %</p>
+      <figure class="chart" style="margin:0"><svg id="stage" role="img" aria-labelledby="stageT"><title id="stageT">Рост цен на продукты в Алматы за январь–апрель по годам 2011–2026, порог дорогой весны и прогноз на 2027 год.</title></svg></figure>
     </div>
-    <p>Порог каждого сезона считается только по прошлым годам. По центральному прогнозу модель почти не поднимает тревогу: плохие сезоны она пропускает, потому что систематически занижает рост сезона (медианная ошибка прогноза из октября <span id="medErr"></span> п.п., занижение в 8 сезонах из 12).</p>
-<h3>Какое правило решения лучше: точка или квантиль 0,75</h3>
-<div class="tblwrap"><table id="tblRule"><thead><tr><th>Правило (прогноз из октября)</th><th>Поймано</th><th>Ложные тревоги</th><th>Пропущено</th><th>Потеря 3:1</th></tr></thead><tbody></tbody></table></div>
-<p id="ruleTxt" style="font-size:14px;color:var(--muted)"></p>
+  </div>
+</section>
 
-<!-- BEAT 5 -->
-    <h2><span class="n">5</span>Механизм: что двигает прогноз</h2>
-    <p>Модель: рост месяца = сезонная норма месяца + <b id="phiTxt">0,45</b> × рост прошлого месяца. Половина «сюрприза»
-      переносится на следующий месяц и затухает. Подвигайте допущения:</p>
-    <label for="sNov">Рост цен в ноябре 2026: <span class="out" id="vNov"></span></label>
-    <input type="range" id="sNov" min="-1" max="4" step="any">
-    <label for="sShock">Внешний шок: дополнительный рост каждый месяц января–апреля: <span class="out"
-        id="vShock"></span></label>
-    <input type="range" id="sShock" min="0" max="3" step="0.1" value="0">
-    <p class="summary" aria-live="polite">Январь–апрель 2027: центральный прогноз <b class="out" id="vJA"></b>, с учётом цены ошибки <b class="out" id="vQ"></b> → <span id="vSig"></span></p>
-<details>
-  <summary><b>Допущения модели</b> (что нужно, чтобы прогноз был верен)</summary>
-  <ul>
-    <li>Сезонная норма каждого месяца такая же, как в среднем в 2011–2026 (<span id="asM"></span>).</li>
-    <li>«Память» φ = <span id="asPhi"></span>: каждый месяц переносит около 45% сюрприза прошлого месяца.</li>
-    <li>Нет нового внешнего шока (курс, война, пандемия) — это задаёт второй слайдер.</li>
-    <li>Курсы и мировые цены не входят в модель: они не улучшили прогноз в бэктесте.</li>
-    <li>Квантиль 0,75 = центральный прогноз + 75-й процентиль прошлых ошибок прогноза сезона (<span id="asN"></span> сезонов) — выборка маленькая, оценка грубая.</li>
-  </ul>
-</details>
-<p style="font-size:14px;color:var(--muted)">Для сравнения: в марте 2022 шок дал +5,5 п.п. за один месяц.</p>
+<!-- 4. Точность -->
+<section class="chapter wrap" id="forecast">
+  <p class="chapter-num">Часть 4. Прогноз</p>
+  <h2>Насколько нашей модели можно верить</h2>
+  <p class="lead">Мы «возвращались» в каждый месяц с 2014 года, давали модели только прошлые данные и сравнивали прогноз с тем, что случилось.</p>
+  <div class="stats">
+    <div class="stat"><div class="n v-maeOur">…</div><div class="l">п.п. — средняя ошибка нашей модели на месяц вперёд</div></div>
+    <div class="stat"><div class="n" id="maeNaive">…</div><div class="l">п.п. — ошибка подхода «как в прошлом году», которым решают сейчас</div></div>
+    <div class="stat"><div class="n" id="cov">…</div><div class="l">случаев факт попадал в наш интервал «8 из 10»</div></div>
+    <div class="stat"><div class="n risk" id="nov">…</div><div class="l">прогноз на ноябрь 2026, заморожен до публикации. Сверим в начале декабря</div></div>
+  </div>
+  <p class="more"><a href="forecast.html">Все прогнозы и история точности</a></p>
+</section>
 
-    <!-- BEAT 6 -->
-    <h2><span class="n">6</span>Риск: где мы ошибались</h2>
-    <p>В 2022 году модель ждала 4,1%, а цены выросли на 12,1%. Почти весь промах — один месяц: март 2022 (прогноз 0,65%,
-      факт 6,1%) — война в Украине, санкции против России, ослабление тенге. В апреле модель уже попала (3,0 против
-      3,1). <b>Модель ловит продолжение шока, но не его начало.</b></p>
-    <p><b>Как заметить рано:</b> если факт месяца выше верхней границы интервала или тенге ослабевает более чем на 10%
-      за месяц — пересчитать прогноз сразу, не дожидаясь февраля.</p>
+<!-- 5. Механизм -->
+<section class="chapter wrap" id="mechanism">
+  <p class="chapter-num">Часть 5. Что двигает прогноз</p>
+  <h2>Сезонная норма плюс эхо прошлого месяца</h2>
+  <p class="lead">Каждый месяц цены растут на свою обычную величину. Если месяц вышел дороже нормы, около <span id="phiPct">…</span> этого «сюрприза» переходит в следующий — и дальше затухает. Попробуйте сами.</p>
+  <div class="console">
+    <div>
+      <div class="ctrl">
+        <label for="sNov">Рост цен в ноябре 2026 <output id="oNov"></output></label>
+        <input type="range" id="sNov" min="-1" max="4" step="any">
+        <p class="hint">Наш прогноз — <span id="novHint">…</span>. Факт выйдет в начале декабря.</p>
+      </div>
+      <div class="ctrl">
+        <label for="sShock">Внешний шок в январе–апреле <output id="oShock"></output></label>
+        <input type="range" id="sShock" min="0" max="3" step="0.05" value="0">
+        <p class="hint">Добавка к росту каждого месяца — например, при резком ослаблении тенге. Март 2022 дал около +5 п.п.</p>
+      </div>
+    </div>
+    <div class="readout" aria-live="polite">
+      <div class="row"><span>Прогноз на январь–апрель</span><b id="rPoint">…</b></div>
+      <div class="row q"><span>С поправкой на ошибку</span><b id="rQ">…</b></div>
+      <div class="verdict-chip" id="rStatus">…</div>
+    </div>
+  </div>
+  <p>Запас тонкий: дополнительных <b id="shockThr">…</b> в месяц хватит, чтобы даже обычный прогноз пересёк порог.</p>
+  <details class="term">
+    <summary>На каких допущениях держится прогноз</summary>
+    <p>Сезонная норма каждого месяца — как в среднем за 2011–2026 годы. Новых внешних шоков нет. Курс и мировые цены в модель не входят: они не улучшили прогноз. Поправка на ошибку посчитана по <span id="nSeasons">…</span> прошлым сезонам — она грубая.</p>
+  </details>
+</section>
 
-    <!-- BEAT 7 -->
-<h2><span class="n">7</span>Что делать</h2>
-<div class="summary">
-  <p><b>Сейчас (ноябрь–декабрь):</b> не закупать физически сверх обычного объёма — центральный прогноз <span id="aJA">…</span> ниже порога. Но с учётом цены ошибки оценка <span id="aQ">…</span> — поэтому заключить рамочные договоры с поставщиками овощей (морковь, капуста, картофель, лук): дешёвая страховка без затрат на хранение.</p>
-  <p><b>В начале февраля:</b> обновить прогноз по январскому ИПЦ. Если квантиль 0,75 выше 4,88% — исполнять договоры и запускать интервенции; если ниже — договоры не исполнять.</p>
-  <p><b>В любой момент:</b> внеочередной пересмотр при сигналах из блока 6.</p>
-</div>
+<!-- 6. Риск -->
+<section class="chapter wrap" id="risk">
+  <p class="chapter-num">Часть 6. Где мы ошибались</p>
+  <h2>Модель видит продолжение шока, но не его начало</h2>
+  <div class="incident">
+    <div class="big">2022</div>
+    <div>
+      <p>Модель ждала весеннего роста около 4%, цены выросли на 12%. Больше двух третей промаха — март: прогноз 0,65%, факт 6,1%.</p>
+      <p>Уже в апреле модель попала: 3,0% против 3,1%.</p>
+    </div>
+  </div>
+  <p><b>Как заметить вовремя.</b> Если рост цен за месяц вышел за верхнюю границу прогноза или тенге за месяц ослаб больше чем на 10% — пересчитать прогноз сразу, не дожидаясь февраля.</p>
+</section>
 
-<footer>
-      <p>Команда: Майра, Айтуар · Курс DAEF, KBTU Business School, 2026.</p>
-      <p>Источники: БНС АСПиР РК («Талдау»), FAO Food Price Index, Национальный Банк РК. Каждое число — в <a
-          href="https://github.com/tasmagambetovamaira-commits/food-risk-almaty/blob/main/ledger/evidence_ledger.csv">evidence
-          ledger</a>.</p>
-      <p><a href="https://github.com/tasmagambetovamaira-commits/food-risk-almaty">Код и данные</a> · <a
-          href="https://github.com/tasmagambetovamaira-commits/food-risk-almaty/blob/main/model/model_card.md">Model
-          card</a> · <a href="methods.html">Методы и ограничения</a> · <a href="run.html">Запустить самому</a> · <a href="../model/artifact.json" download>Скачать данные (JSON)</a> · Сборка: <span
-          id="built"></span></p>
-    </footer>
-  </main>
+<!-- 7. Что делать -->
+<section class="chapter wrap" id="ask">
+  <p class="chapter-num">Часть 7. Что делать</p>
+  <h2>Застраховаться сейчас, решать в феврале</h2>
+  <ol class="plan">
+    <li><div class="when">Ноябрь–декабрь</div><p>Не закупать сверх обычного, но заключить рамочные договоры с поставщиками моркови, капусты, картофеля и лука. Дешёвая страховка: хранение не нужно.</p></li>
+    <li><div class="when">Начало февраля</div><p>Обновить прогноз по январским ценам. С поправкой выше <span class="v-thr">…</span> — исполнять договоры и выпускать запасы. Ниже — не исполнять.</p></li>
+    <li><div class="when">В любой момент</div><p>Пересчитать прогноз, если появились признаки шока из блока 6.</p></li>
+  </ol>
+</section>
 
-  <script src="artifact.js"></script>
-  <script>
-    const fmt = (x, d = 1) => (x < 0 ? "−" : "") + Math.abs(x).toFixed(d).replace(".", ",");
-    const pct = (x, d = 2) => fmt(x, d) + "%";
-    const C = { blue: "#0072B2", orange: "#D55E00", grey: "#8a8a8a" };
-    const NS = "http://www.w3.org/2000/svg";
-    function el(tag, attrs, parent, text) {
-      const e = document.createElementNS(NS, tag);
-      for (const k in attrs) e.setAttribute(k, attrs[k]);
-      if (text !== undefined) e.textContent = text;
-      parent.appendChild(e); return e;
-    }
+<!-- Словарь -->
+<section class="chapter wrap" id="glossary">
+  <p class="chapter-num">Словарь</p>
+  <h2>Термины простыми словами</h2>
+  <details class="term"><summary>Процентный пункт (п.п.)</summary><p>Разница между двумя процентами. Если рост был 1%, а стал 3%, он вырос на 2 п.п.</p></details>
+  <details class="term"><summary>Порог дорогой весны</summary><p>Рост цен за январь–апрель, который превышали в одном сезоне из четырёх (75-й процентиль за 2011–2026).</p></details>
+  <details class="term"><summary>Поправка на ошибку (квантиль 0,75)</summary><p>Оценка, которую факт не превысит в 3 случаях из 4. Её берут, когда ошибка в одну сторону дороже: у нас недооценка в 3 раза дороже, поэтому 3 / (3 + 1) = 0,75.</p></details>
+  <details class="term"><summary>Интервал «8 из 10»</summary><p>Диапазон, в который факт попадал в 8 случаях из 10, когда мы проверяли модель на прошлых годах.</p></details>
+  <details class="term"><summary>Бенчмарк</summary><p>Простой способ прогноза, с которым сравнивают модель. Главный — «как в прошлом году»: так решают без нашей модели.</p></details>
+  <details class="term"><summary>Проверка на истории (бэктест)</summary><p>Модели дают только данные до выбранного месяца в прошлом и сравнивают её прогноз с тем, что случилось потом.</p></details>
+  <p class="en"><i>English summary.</i> A forecasting desk for the Almaty stabilisation fund. Our seasonal AR(1) model expects food prices to rise by <span class="v-point-en">…</span> in January–April 2027, below the <span class="v-thr-en">…</span> threshold. The model has under-predicted most past seasons and under-prediction costs three times more, so the loss-optimal 0.75 quantile — <span class="v-q75-en">…</span> — is the number we act on. Recommendation: framework supply contracts now, purchase decision in early February.</p>
+</section>
+</main>
 
-    // Вертикальные столбцы
-    function vbars(svg, labels, values, colors, refLine) {
-      const W = Math.max(320, Math.round(svg.getBoundingClientRect().width) || 700), H = W < 500 ? 220 : 260, L = 30, R = 6, T = 14, B = 26;
-      svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
-      const lo = Math.min(0, ...values), hi = Math.max(...values, refLine || 0) * 1.08;
-      const y = v => T + (hi - v) / (hi - lo) * (H - T - B);
-      const bw = (W - L - R) / values.length;
-      for (let t = Math.ceil(lo); t <= hi; t += (hi > 6 ? 2 : 0.5)) {
-        el("line", { x1: L, x2: W - R, y1: y(t), y2: y(t), stroke: "#eee" }, svg);
-        el("text", { x: L - 4, y: y(t) + 4, "text-anchor": "end" }, svg, fmt(t, hi > 6 ? 0 : 1));
-      }
-      values.forEach((v, i) => {
-        el("rect", { x: L + i * bw + bw * 0.15, y: Math.min(y(v), y(0)), width: bw * 0.7, height: Math.abs(y(v) - y(0)), fill: colors[i] }, svg);
-        if (bw >= 16 || i % 2 === 0)
-          el("text", { x: L + i * bw + bw / 2, y: H - B + 14, "text-anchor": "middle" }, svg, labels[i]);
-      });
-      el("line", { x1: L, x2: W - R, y1: y(0), y2: y(0), stroke: "#999" }, svg);
-      if (refLine) {
-        el("line", { x1: L, x2: W - R, y1: y(refLine), y2: y(refLine), stroke: C.orange, "stroke-dasharray": "5 4", "stroke-width": 1.5 }, svg);
-        el("text", { x: W - R, y: y(refLine) - 5, "text-anchor": "end", fill: C.orange }, svg, "порог " + pct(refLine));
-      }
-    }
+<footer class="site-foot">
+  <div class="wrap">
+    <p>Проект курса «Анализ данных и экономическое прогнозирование», KBTU Business School, 2026. Команда: Майра, Айтуар.</p>
+    <p>Данные: БНС АСПиР РК («Талдау»), FAO, Национальный Банк РК. Данные по <span class="v-thru">…</span>, сборка <span class="v-built">…</span>.</p>
+    <p><a href="https://github.com/tasmagambetovamaira-commits/food-risk-almaty">Код и данные</a>, <a href="https://github.com/tasmagambetovamaira-commits/food-risk-almaty/blob/main/ledger/evidence_ledger.csv">откуда каждое число</a>, <a href="https://github.com/tasmagambetovamaira-commits/food-risk-almaty/blob/main/model/model_card.md">карточка модели</a>, <a href="forecast.html">прогноз и точность</a>, <a href="methods.html">методы и ограничения</a>, <a href="run.html">запустить самому</a>, <a href="../model/artifact.json" download>скачать данные сайта</a>.</p>
+  </div>
+</footer>
 
-    // Горизонтальные столбцы
-    function hbars(svg, labels, values, colors) {
-      const W = Math.max(320, Math.round(svg.getBoundingClientRect().width) || 700), rowH = 24, L = W < 500 ? 120 : 150, R = 40, T = 6;
-      const H = T + rowH * values.length + 6;
-      svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
-      const lo = Math.min(0, ...values), hi = Math.max(...values);
-      const x = v => L + (v - lo) / (hi - lo) * (W - L - R);
-      values.forEach((v, i) => {
-        const yy = T + i * rowH;
-        el("text", { x: L - 8, y: yy + 16, "text-anchor": "end", style: "font-size:12px;fill:#1a1a1a" }, svg, labels[i]);
-        el("rect", { x: Math.min(x(v), x(0)), y: yy + 4, width: Math.max(1, Math.abs(x(v) - x(0))), height: rowH - 8, fill: colors[i] }, svg);
-        el("text", { x: Math.max(x(v), x(0)) + 5, y: yy + 16, style: "font-size:12px" }, svg, fmt(v));
-      });
-    }
+<script src="artifact.js"></script>
+<script src="app.js"></script>
+<script>
+loadArtifact().then(A => {
+  const D = A.decision, SE = A.season_errors.oct;
+  const q = Object.fromEntries(A.quality_h1.map(m => [m.model, m]));
+  const S = A.seasons;
 
-    (window.ARTIFACT ? Promise.resolve(window.ARTIFACT) : fetch("../model/artifact.json").then(r => r.json())).then(A => {
-      const D = A.decision, M = A.model;
-      document.getElementById("thru").textContent = A.meta.data_through;
-      document.getElementById("built").textContent = A.meta.built;
-      ["hJA", "tJA", "aJA"].forEach(id => document.getElementById(id).textContent = pct(D.janapr_forecast));
-      ["hQ", "tQ", "aQ"].forEach(id => document.getElementById(id).textContent = pct(D.janapr_q75));
-      document.getElementById("tJAI").textContent = `80%: ${fmt(D.janapr_lo80, 2)} … ${fmt(D.janapr_hi80, 2)}`;
-      document.getElementById("enJA").textContent = D.janapr_forecast.toFixed(2) + "%";
-      document.getElementById("enQ").textContent = D.janapr_q75.toFixed(2) + "%";
-      const SE = A.season_errors.oct;
-      document.getElementById("medErr").textContent = "+" + fmt(SE.q50, 2);
-      document.getElementById("asPhi").textContent = fmt(M.phi, 2);
-      document.getElementById("asN").textContent = SE.n;
-      document.getElementById("asM").textContent = "янв " + fmt(M.m[0], 2) + ", июл " + fmt(M.m[6], 2) + ", дек " + fmt(M.m[11], 2) + " п.п.";
-      const tRule = document.querySelector("#tblRule tbody"), RL = A.decision_rules.oct;
-      [["point", "Центральный прогноз > порога"], ["q75", "Квантиль 0,75 > порога"]].forEach(([k, lbl]) => {
-        const v = RL[k];
-        tRule.insertAdjacentHTML("beforeend", `<tr><td>${lbl}</td><td>${v.hits}</td><td>${v.false}</td><td>${v.miss}</td><td>${v.loss}</td></tr>`);
-      });
-      document.getElementById("ruleTxt").textContent = `Сезоны ${2026 - RL.point.seasons + 1}–2026 (${RL.point.seasons} сезонов). Потеря = 3 × пропуски + 1 × ложные тревоги. Квантиль считается только по ошибкам прошлых сезонов. Из октября правило квантиля даёт тревогу всегда (9 сезонов из 9) — поэтому в октябре дешёвая страховка, а решение о закупке — в феврале.`;
-      document.getElementById("phiTxt").textContent = fmt(M.phi, 2);
+  countUp($("heroNum"), D.janapr_forecast, 2);
+  putAll("v-point", pct(D.janapr_forecast, 2));
+  putAll("v-q75", pct(D.janapr_q75, 2));
+  putAll("v-thr", pct(D.threshold, 2));
+  putAll("v-med", pct(D.median, 1));
+  putAll("v-point-en", D.janapr_forecast.toFixed(2) + "%");
+  putAll("v-q75-en", D.janapr_q75.toFixed(2) + "%");
+  putAll("v-thr-en", D.threshold.toFixed(2) + "%");
+  putAll("v-thru", A.meta.data_through);
+  putAll("v-built", A.meta.built);
+  putAll("v-maeOur", num(q.ar1_seasonal.mae, 2));
 
-      // Графики
-      const S = A.seasons;
-      vbars(document.getElementById("chSeasons"), S.map(s => String(s.year).slice(2)), S.map(s => s.growth),
-        S.map(s => s.growth > D.threshold ? C.orange : C.blue), D.threshold);
-      const I = A.items;
-      hbars(document.getElementById("chItems"), I.map(d => d.item), I.map(d => d.janapr_median),
-        I.map((d, i) => i < 4 ? C.orange : C.grey));
-      const narrow = document.getElementById("chProfile").getBoundingClientRect().width < 500;
-      const mon = narrow ? ["я", "ф", "м", "а", "м", "и", "и", "а", "с", "о", "н", "д"] : ["янв", "фев", "мар", "апр", "май", "июн", "июл", "авг", "сен", "окт", "ноя", "дек"];
-      vbars(document.getElementById("chProfile"), mon, A.profile.map(p => p.median),
-        A.profile.map(p => [1, 2, 3, 4, 10, 11, 12].includes(p.month) ? C.blue : C.grey));
+  put("maeDrv", num(q.ar1_drivers.mae, 2));
+  put("maeOur", num(q.ar1_seasonal.mae, 2));
+  put("maeNaive", num(q.seasonal_naive.mae, 2));
+  put("cov", Math.round(q.ar1_seasonal.coverage80 * 100) + "%");
+  put("lo80", pct(D.janapr_lo80, 1));
+  put("hi80", pct(D.janapr_hi80, 1));
+  put("shareUnder", Math.round(SE.share_under * SE.n) + " из " + SE.n);
+  put("nSeasons", SE.n);
+  const nov = A.forecast[0].point;
+  put("nov", pct(nov, 2));
+  put("novHint", pct(nov, 2));
+  put("phiPct", Math.round(A.model.phi * 100) + "%");
+  put("shockThr", "+" + num(shockToThreshold(A), 2) + " п.п.");
 
-      // Замороженный прогноз
-      const pr = A.prereg.find(p => p.region === "almaty" && p.model === "ar1_seasonal");
-      document.getElementById("tNov").textContent = pct(pr.nov2026_point);
-      document.getElementById("tNovI").textContent = `80%: ${fmt(pr.nov2026_lo80, 2)} … ${fmt(pr.nov2026_hi80, 2)}`;
+  const above = S.filter(s => s.growth > D.threshold);
+  put("sThr", `Выше ${pct(D.threshold, 2)} весна бывает в одном году из четырёх. За ${S.length} лет — ${above.length} раз${[2,3,4].includes(above.length) ? "а" : ""}: ${above.map(s => s.year).join(", ")}.`);
+  const top = A.items.slice(0, 4);
+  put("tItems", `Сильнее всего весной дорожают ${top.map(t => t.item.toLowerCase()).join(", ")} — от ${num(Math.min(...top.map(t => t.janapr_median)), 0)} до ${num(Math.max(...top.map(t => t.janapr_median)), 0)}%`);
 
-      // Таблицы
-      const names = {
-        ar1_seasonal: "Наша модель (AR(1) + сезон)", sarima: "SARIMA", ar1_drivers: "AR(1) + курсы и FAO",
-        climatology: "Бенчмарк: сезонная норма", seasonal_mean3: "Бенчмарк: среднее 3 лет", seasonal_naive: "Бенчмарк: как в прошлом году"
-      };
-      const tq = document.querySelector("#tblQ tbody");
-      [...A.quality_h1].sort((a, b) => a.asym_loss - b.asym_loss).forEach(q => {
-        tq.insertAdjacentHTML("beforeend", `<tr><td>${names[q.model] || q.model}</td><td>${fmt(q.mae, 3)}</td><td>${fmt(q.asym_loss, 3)}</td><td>${fmt(q.coverage80 * 100, 0)}%</td></tr>`);
-      });
-      const tr = document.querySelector("#tblR tbody");
-      A.decision_record.forEach(d => {
-        const ok = d.signal === d.bad;
-        tr.insertAdjacentHTML("beforeend", `<tr><td>${d.season}</td><td>${fmt(d.forecast, 2)}</td><td>${fmt(d.actual, 2)}</td><td>${fmt(d.threshold, 2)}</td>
-      <td>${d.signal ? "да" : "нет"}</td><td class="${ok ? "yes" : "no"}">${d.bad ? "да" : "нет"}${ok ? " ✓" : " ✗"}</td></tr>`);
-      });
+  function drawStatic() {
+    const P = A.profile, narrow = widthOf($("chCalendar")) < 520;
+    columns($("chCalendar"), P.map(p => narrow ? "яфмамииасонд"[p.month - 1] : MON3[p.month - 1]), P.map(p => p.median),
+      { colors: P.map(p => p.month <= 4 ? C.carrot : C.grey), band: [0, 3], bandLabel: "январь–апрель", height: narrow ? 190 : 240 });
+    rows($("chItems"), A.items.map(d => d.item), A.items.map(d => d.janapr_median),
+      A.items.map((d, i) => i < 4 ? C.carrot : C.grey));
+  }
+  drawStatic();
 
-      // Сценарий: та же формула, что в src/models.py (ar1_seasonal)
-      const sNov = document.getElementById("sNov"), sShock = document.getElementById("sShock");
-      sNov.value = A.forecast[0].point;
-      function run() {
-        const nov = +sNov.value, shock = +sShock.value;
-        let y = nov, cum = 1;
-        for (const mth of [12, 1, 2, 3, 4]) {
-          y = M.m[mth - 1] + M.phi * y + (mth <= 4 ? shock : 0);
-          if (mth <= 4) cum *= 1 + y / 100;
-        }
-        const ja = (cum - 1) * 100, q = ja + SE.q75, sig = q > D.threshold;
-        document.getElementById("vNov").textContent = pct(nov, 1);
-        document.getElementById("vShock").textContent = "+" + fmt(shock, 1) + " п.п.";
-        document.getElementById("vJA").textContent = pct(ja);
-        document.getElementById("vQ").textContent = pct(q);
-        document.getElementById("vSig").innerHTML = sig
-          ? `<span class="pill" style="background:${C.orange}">выше порога — нужна страховка</span>`
-          : `<span class="pill" style="background:${C.blue}">ниже порога даже с запасом — обычный объём</span>`;
-      }
-      sNov.oninput = sShock.oninput = run; run();
-    }).catch(e => {
-      document.querySelector("main").insertAdjacentHTML("afterbegin",
-        `<p class="summary">Не удалось загрузить model/artifact.json. Откройте сайт через веб-сервер: <code>python -m http.server</code> в корне репозитория.</p>`);
+  // Липкий график
+  const stage = Stage($("stage"), A);
+  let current = 1;
+  stage.set(1);
+  const steps = [...document.querySelectorAll(".step")];
+  const io = new IntersectionObserver(es => {
+    es.forEach(e => {
+      if (!e.isIntersecting) return;
+      steps.forEach(s => s.classList.toggle("is-active", s === e.target));
+      current = +e.target.dataset.step; stage.set(current);
     });
-  </script>
-</body>
+  }, { rootMargin: "-45% 0px -45% 0px" });
+  steps.forEach(s => io.observe(s));
+  steps[0].classList.add("is-active");
+  redraw(() => { drawStatic(); stage.rebuild(); stage.set(current); });
 
+  // Пульт
+  const sNov = $("sNov"), sShock = $("sShock");
+  sNov.value = nov;
+  function run() {
+    const n = +sNov.value, s = +sShock.value;
+    const ja = simulate(A, n, s), jq = ja + SE.q75;
+    $("oNov").textContent = pct(n, 2);
+    $("oShock").textContent = "+" + num(s, 2) + " п.п.";
+    $("rPoint").textContent = pct(ja, 2);
+    $("rQ").textContent = pct(jq, 2);
+    const st = $("rStatus");
+    if (ja > D.threshold) { st.className = "verdict-chip alert"; st.textContent = "Даже обычный прогноз выше порога — готовить запасы"; }
+    else if (jq > D.threshold) { st.className = "verdict-chip alert"; st.textContent = "С поправкой выше порога — нужна страховка"; }
+    else { st.className = "verdict-chip ok"; st.textContent = "Ниже порога даже с поправкой — обычный объём"; }
+  }
+  sNov.oninput = sShock.oninput = run; run();
+}).catch(showLoadError);
+</script>
+</body>
 </html>

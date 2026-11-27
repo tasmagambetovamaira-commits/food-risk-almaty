@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Прогноз и точность — Межсезонье</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<nav class="site-nav" aria-label="Разделы сайта">
+  <div class="wrap">
+    <a class="brand" href="index.html">Межсезонье</a>
+    <a class="nav" href="index.html">Главное</a>
+    <a class="nav" href="forecast.html" aria-current="page">Прогноз и точность</a>
+    <a class="nav" href="methods.html">Методы и ограничения</a>
+    <a class="nav" href="run.html">Запустить самому</a>
+  </div>
+</nav>
+
+<main class="wrap">
+<header class="page-head">
+  <h1>Прогноз и насколько ему можно верить</h1>
+  <p>Здесь все наши прогнозы, проверка в реальном времени и история ошибок модели на прошлых годах. Хорошая модель не та, что всегда попадает, а та, что честно показывает, как часто и насколько промахивается.</p>
+  <p class="en"><i>English summary.</i> Frozen Reality Check forecast for November 2026, January–April 2027 forecast with its 0.75 quantile, out-of-sample accuracy against three benchmarks, past decisions, and a comparison of point and quantile decision rules.</p>
+</header>
+
+<section class="section">
+  <h2>Весна 2027: январь–апрель</h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Оценка</th><th>Рост цен за январь–апрель</th><th>Выше порога <span class="v-thr">…</span>?</th></tr></thead>
+    <tbody>
+      <tr><td>Центральный прогноз</td><td id="fPoint">…</td><td id="fPointS">…</td></tr>
+      <tr><td>В 8 случаях из 10</td><td id="fRange">…</td><td>—</td></tr>
+      <tr class="ours"><td>С поправкой на ошибку (квантиль 0,75)</td><td id="fQ">…</td><td id="fQS">…</td></tr>
+    </tbody>
+  </table></div>
+  <p>Прогноз сделан по данным до <span class="v-thru">…</span>. Месяц за месяцем:</p>
+  <div class="table-wrap"><table id="tPath"><thead><tr><th>Месяц</th><th>Ожидаемый рост за месяц</th></tr></thead><tbody></tbody></table></div>
+</section>
+
+<section class="section">
+  <h2>Проверка в реальном времени: ноябрь 2026</h2>
+  <p>Мы заморозили этот прогноз 27 ноября 2026 года, до того как статистика опубликовала цены за ноябрь. Изменить его задним числом нельзя: время записи видно в <a href="https://github.com/tasmagambetovamaira-commits/food-risk-almaty/blob/main/prereg/prereg.md">истории репозитория</a>.</p>
+  <div class="table-wrap"><table id="tPrereg">
+    <thead><tr><th>Способ прогноза</th><th>Алматы, ноябрь</th><th>В 8 случаях из 10</th><th>Казахстан (запасной ряд)</th></tr></thead>
+    <tbody></tbody>
+  </table></div>
+  <p id="rcStatus"><b>Факт:</b> ожидается в начале декабря 2026 (БНС). Здесь появится сравнение и разбор ошибки.</p>
+</section>
+
+<section class="section">
+  <h2>Точность на истории: прогноз на месяц вперёд</h2>
+  <p>С 2014 по 2026 год мы <span id="nFc">…</span> раз давали модели только прошлые данные и сравнивали прогноз на следующий месяц с фактом. Потеря учитывает, что недооценка в 3 раза дороже переоценки. Чем меньше — тем лучше.</p>
+  <div class="table-wrap"><table id="tQ">
+    <thead><tr><th>Способ прогноза</th><th>Средняя ошибка, п.п.</th><th>Потеря 3:1</th><th>Факт внутри интервала 80%</th></tr></thead>
+    <tbody></tbody>
+  </table></div>
+  <p>Наша модель точнее всех трёх простых способов. SARIMA по потере чуть лучше, но разница меньше 5%, и по правилу, записанному заранее, мы выбрали более простую модель.</p>
+</section>
+
+<section class="section">
+  <h2>Решения в прошлом</h2>
+  <p>Что сказала бы модель в январе каждого года и что случилось на самом деле. Порог для каждого сезона посчитан только по предыдущим годам.</p>
+  <div class="table-wrap"><table id="tRec">
+    <thead><tr><th>Сезон</th><th>Прогноз, %</th><th>Факт, %</th><th>Порог, %</th><th>Модель: тревога?</th><th>Сезон был плохим?</th></tr></thead>
+    <tbody></tbody>
+  </table></div>
+</section>
+
+<section class="section">
+  <h2>Почему мы используем поправку на ошибку</h2>
+  <p>Если сравнивать с порогом только центральный прогноз, модель почти не поднимает тревогу: она систематически занижает весенний рост — в <span id="shU">…</span> сезонов (типичная недооценка — <span id="medE">…</span>). С поправкой (квантиль 0,75) она ловит плохие сезоны ценой ложных тревог. При потере 3:1 это выгоднее.</p>
+  <div class="table-wrap"><table id="tRule">
+    <thead><tr><th>Правило</th><th>Когда</th><th>Поймано плохих сезонов</th><th>Ложные тревоги</th><th>Пропущено</th><th>Потеря</th></tr></thead>
+    <tbody></tbody>
+  </table></div>
+  <p>Из октября правило с поправкой поднимает тревогу всегда — поэтому осенью мы советуем только дешёвую страховку. Различать сезоны модель начинает с январскими данными. Это изменение мы внесли после заморозки и записали <a href="https://github.com/tasmagambetovamaira-commits/food-risk-almaty/blob/main/prereg/deviations.md">как отклонение</a>.</p>
+</section>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <p>Данные по <span class="v-thru">…</span>, сборка <span class="v-built">…</span>. <a href="index.html">На главную</a></p>
+  </div>
+</footer>
+
+<script src="artifact.js"></script>
+<script src="app.js"></script>
+<script>
+loadArtifact().then(A => {
+  const D = A.decision, SE = A.season_errors.oct;
+  putAll("v-thr", pct(D.threshold, 2));
+  putAll("v-thru", A.meta.data_through);
+  putAll("v-built", A.meta.built);
+  const yes = b => b ? "да" : "нет";
+
+  put("fPoint", pct(D.janapr_forecast, 2)); put("fPointS", yes(D.janapr_forecast > D.threshold));
+  put("fRange", `${pct(D.janapr_lo80, 1)} … ${pct(D.janapr_hi80, 1)}`);
+  put("fQ", pct(D.janapr_q75, 2)); put("fQS", yes(D.janapr_q75 > D.threshold));
+  const tp = document.querySelector("#tPath tbody");
+  A.forecast.forEach(f => {
+    const [y, m] = f.month.split("-");
+    tp.insertAdjacentHTML("beforeend", `<tr><td>${MONTHS[+m - 1]} ${y}</td><td>${pct(f.point, 2)}</td></tr>`);
+  });
+
+  const names = { ar1_seasonal: "Наша модель", sarima: "SARIMA (второй кандидат)", ar1_drivers: "Наша модель + курсы и мировые цены",
+                  climatology: "Обычная сезонная норма", seasonal_mean3: "Среднее за 3 прошлых года", seasonal_naive: "Как в прошлом году (сейчас)" };
+  const tpr = document.querySelector("#tPrereg tbody");
+  ["ar1_seasonal", "sarima", "climatology", "seasonal_naive"].forEach(k => {
+    const a = A.prereg.find(p => p.region === "almaty" && p.model === k), r = A.prereg.find(p => p.region === "rk" && p.model === k);
+    tpr.insertAdjacentHTML("beforeend", `<tr class="${k === "ar1_seasonal" ? "ours" : ""}"><td>${names[k]}</td><td>${pct(a.nov2026_point, 2)}</td><td>${num(a.nov2026_lo80, 2)} … ${num(a.nov2026_hi80, 2)}</td><td>${pct(r.nov2026_point, 2)}</td></tr>`);
+  });
+
+  const nfc = A.prereg[0].n_past_errors; put("nFc", nfc);
+  const tq = document.querySelector("#tQ tbody");
+  [...A.quality_h1].sort((a, b) => a.asym_loss - b.asym_loss).forEach(q => {
+    tq.insertAdjacentHTML("beforeend", `<tr class="${q.model === "ar1_seasonal" ? "ours" : ""}"><td>${names[q.model] || q.model}</td><td>${num(q.mae, 2)}</td><td>${num(q.asym_loss, 2)}</td><td>${Math.round(q.coverage80 * 100)}%</td></tr>`);
+  });
+
+  const tr = document.querySelector("#tRec tbody");
+  A.decision_record.forEach(d => {
+    const ok = d.signal === d.bad;
+    tr.insertAdjacentHTML("beforeend", `<tr><td>${d.season}</td><td>${num(d.forecast, 2)}</td><td>${num(d.actual, 2)}</td><td>${num(d.threshold, 2)}</td><td>${yes(d.signal)}</td><td class="${ok ? "good" : "bad"}">${yes(d.bad)}, ${ok ? "модель права" : "модель ошиблась"}</td></tr>`);
+  });
+
+  put("shU", Math.round(SE.share_under * SE.n) + " из " + SE.n);
+  put("medE", num(SE.q50, 1) + " п.п.");
+  const tru = document.querySelector("#tRule tbody");
+  [["oct", "октябрь"], ["jan", "январь"]].forEach(([w, wl]) => {
+    [["point", "Центральный прогноз выше порога"], ["q75", "С поправкой выше порога"]].forEach(([k, kl]) => {
+      const v = A.decision_rules[w][k];
+      tru.insertAdjacentHTML("beforeend", `<tr class="${k === "q75" ? "ours" : ""}"><td>${kl}</td><td>${wl}</td><td>${v.hits}</td><td>${v.false}</td><td>${v.miss}</td><td>${v.loss}</td></tr>`);
+    });
+  });
+}).catch(showLoadError);
+</script>
+</body>
+</html>
