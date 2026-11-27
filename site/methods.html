@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Методы и ограничения — The Decision Desk</title>
+<style>
+  :root{--ink:#1a1a1a;--muted:#5c5c5c;--line:#d9d9d9;--bg:#fbfaf7;--card:#fff;--blue:#0072B2;--orange:#D55E00;--green:#009E73}
+  *{box-sizing:border-box}
+  body{margin:0;font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--ink);background:var(--bg)}
+  main{max-width:760px;margin:0 auto;padding:20px 16px 60px}
+  nav{font-size:14px;margin-bottom:12px}
+  h1{font-size:clamp(24px,5vw,32px);line-height:1.2;margin:6px 0 12px}
+  h2{font-size:21px;margin:34px 0 8px;border-top:1px solid var(--line);padding-top:16px}
+  h3{font-size:16px;margin:18px 0 4px}
+  code{background:#eee;padding:1px 4px;border-radius:3px;font-size:14px}
+  .box{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--blue);padding:10px 14px;margin:12px 0}
+  .warn{border-left-color:var(--orange)}
+  table{border-collapse:collapse;width:100%;font-size:14px;background:var(--card)}
+  th,td{border-bottom:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
+  .tblwrap{overflow-x:auto}
+  .tag{font-size:12px;font-weight:700;white-space:nowrap}
+  a{color:var(--blue)}
+  footer{margin-top:40px;border-top:1px solid var(--line);padding-top:12px;font-size:13px;color:var(--muted)}
+</style>
+</head>
+<body>
+<main>
+<nav><a href="index.html">← Главная</a> · <b>Методы и ограничения</b> · <a href="run.html">Запустить самому</a></nav>
+<h1>Методы и ограничения</h1>
+<p><i>English summary:</i> data sources and cleaning, the model and benchmarks, rolling-origin evaluation with an asymmetric 3:1 loss, residual diagnostics, pre-registration and deviations, the red-team memo with our responses, and the limits of the product.</p>
+
+<h2>1. Данные</h2>
+<div class="tblwrap"><table>
+<thead><tr><th>Ряд</th><th>Источник</th><th>Частота, период</th></tr></thead>
+<tbody>
+<tr><td>ИПЦ продовольственных товаров, Алматы и РК, % к предыдущему месяцу (целевой ряд)</td><td>БНС АСПиР РК, «Талдау» (официальный)</td><td>месяц, 01.2011–<span class="thru">…</span></td></tr>
+<tr><td>ИПЦ 11 товаров и групп: картофель, капуста, лук, морковь, сахар, говядина, окорочка, яйца, мука, молочные, подсолнечное масло</td><td>БНС, «Талдау»</td><td>месяц</td></tr>
+<tr><td>Индекс мировых цен на продовольствие FAO (общий и подындексы)</td><td>FAO</td><td>месяц</td></tr>
+<tr><td>Официальные курсы USD/KZT, RUB/KZT</td><td>Национальный Банк РК</td><td>день → среднее за месяц по рабочим дням</td></tr>
+</tbody></table></div>
+<p>Каждое число на сайте трассируется до строки в <a href="https://github.com/tasmagambetovamaira-commits/food-risk-almaty/blob/main/ledger/evidence_ledger.csv">evidence ledger</a>: источник, дата выгрузки, преобразование, скрипт.</p>
+<h3>Найденные проблемы данных и что с ними сделали</h3>
+<ul>
+<li><b>Неверный фильтр в «Талдау».</b> Шесть рядов сначала выгрузились «к декабрю прошлого года», а не «к предыдущему месяцу» (морковь показывала +164% за месяц). Перекачали; скрипт <code>src/prepare.py</code> теперь проверяет фильтр в каждом файле и падает при ошибке.</li>
+<li><b>Квартальная частота</b> у моркови, говядины и окорочков — перекачали помесячно.</li>
+<li><b>Оборванные ряды</b> (отдельные категории яиц, хлеб, пшеничная мука доступны не за все годы) — взяли укрупнённые группы, хлеб исключили.</li>
+<li><b>Округление БНС</b> до 0,1 п.п. накапливается: 12 месячных ростов дают 7,32% против официальных 7,6% за год. Сравниваем накопленный рост, посчитанный одинаково для прогноза и факта.</li>
+</ul>
+<p>Сырые файлы в <code>data/raw/</code> не редактируются; все преобразования — в коде.</p>
+
+<h2>2. Модель и бенчмарки</h2>
+<div class="box">
+<b>Основная модель (ar1_seasonal):</b> рост<sub>t</sub> = m<sub>месяц t</sub> + φ · рост<sub>t−1</sub> + ошибка<sub>t</sub><br>
+12 сезонных констант m и «память» φ = <span id="phi">…</span>, оценка МНК. Прогноз на несколько месяцев — рекурсивно; влияние текущего сюрприза затухает как φ<sup>k</sup>.
+</div>
+<p><b>Почему такая модель.</b> Ряд роста цен стационарен (тесты ADF и KPSS), ACF/PACF показывают первый лаг и сезонность. Кандидаты: SARIMA(1,0,0)(1,0,0)<sub>12</sub> и ar1 с курсами и FAO (лаги 1–2).</p>
+<p><b>Бенчмарки:</b> «как в прошлом году» (seasonal naive — текущая практика), «среднее 3 лет», «сезонная норма» (климатология).</p>
+
+<h2>3. Как оценивали</h2>
+<ul>
+<li><b>Rolling origin:</b> с января 2014 на каждом месяце модель заново оценивается только на данных до этого месяца и прогнозирует 1–6 месяцев вперёд.</li>
+<li><b>Тест на утечку:</b> всё после точки прогноза заменяется на 999 — прогноз не должен измениться. Проходят все модели.</li>
+<li><b>Функция потерь 3:1:</b> недооценка роста в 3 раза дороже переоценки (не закупили — дорожает для всех; закупили лишнее — бюджет платит за хранение).</li>
+<li><b>Интервалы 80%:</b> 10-й и 90-й процентили прошлых ошибок (не нормальное распределение — остатки с тяжёлыми хвостами). Покрытие на истории — <span id="cov">…</span>.</li>
+<li><b>Порог решения 4,88%</b> — 75-й процентиль сезонов январь–апрель; в бэктесте для каждого сезона считается только по прошлым годам.</li>
+<li><b>Диагностика остатков:</b> Ljung–Box (лаги 3 и 12), Breusch–Godfrey, Jarque–Bera, ARCH. Остатки основной модели — белый шум (Ljung–Box(12) p = 0,47); нормальность отвергнута из-за шоков 2015 и 2022.</li>
+<li><b>Выбор модели</b> — по правилу, записанному заранее: из моделей с белым шумом — минимальная потеря; при разнице &lt; 5% — более простая. Выбрана ar1_seasonal: её потеря выше, чем у SARIMA, на 4,4% — меньше 5%.</li>
+</ul>
+<p><b>Пререгистрация:</b> прогноз на ноябрь 2026, порог и правило выбора заморожены <a href="https://github.com/tasmagambetovamaira-commits/food-risk-almaty/blob/main/prereg/prereg.md">27.11.2026</a> — до публикации факта. Отклонения — <a href="https://github.com/tasmagambetovamaira-commits/food-risk-almaty/blob/main/prereg/deviations.md">отдельным файлом</a>. Честно: сравнение моделей на истории сделано до пререгистрации.</p>
+
+<h2>4. Red-team: атаки на наш вывод и ответы</h2>
+<p>Мы атаковали свой вывод с двух сторон до обмена с другой командой. ✅ — ответ есть; ⚠️ — атака частично справедлива; 🔧 — изменили продукт. Полный текст — <a href="https://github.com/tasmagambetovamaira-commits/food-risk-almaty/blob/main/redteam/self_redteam.md">redteam/self_redteam.md</a>.</p>
+<div class="tblwrap"><table>
+<thead><tr><th>Атака</th><th>Ответ</th></tr></thead>
+<tbody>
+<tr><td>Модель из октября не ловит плохие сезоны</td><td><span class="tag">⚠️</span> Правда. Поэтому решение о закупке — в феврале, а в октябре — только страховка. 2020 и 2022 — шоки после января, их не ловит никто.</td></tr>
+<tr><td>Запас до порога тонкий</td><td><span class="tag">⚠️</span> Да: шок всего +0,11 п.п. в месяц переводит центральный прогноз выше порога. Поэтому — сигналы внеочередного пересмотра.</td></tr>
+<tr><td>При потере 3:1 сравнивать с порогом точку неправильно</td><td><span class="tag">🔧</span> Согласны. Добавили правило квантиля 0,75 (отклонение D1): оценка <span id="q75">…</span> выше порога, рекомендация изменена.</td></tr>
+<tr><td>Внешние шоки сейчас вероятнее</td><td><span class="tag">⚠️</span> Модель не оценивает вероятность шоков; сценарий шока — слайдер на главной, эпизод 2022 — блок «Риск».</td></tr>
+<tr><td>Порог выбран произвольно</td><td><span class="tag">✅</span> 75-й процентиль = квантиль 3/(3+1) при потере 3:1; заморожен заранее; в бэктесте без подглядывания.</td></tr>
+<tr><td>Цены определяют НДС, курс и мировой рынок, а не сезон</td><td><span class="tag">✅</span> Курсы и FAO не улучшили прогноз (MAE 0,63 против 0,48); FAO не включает овощи. Эффект НДС был в декабре 2025, а не в январе.</td></tr>
+<tr><td>Модель подогнана под историю</td><td><span class="tag">⚠️</span> Сравнение на истории — до пререгистрации, мы это раскрываем. Защита: rolling origin, тест на утечку, правило выбора заранее, выбрана более простая модель. Проверка — Reality Check.</td></tr>
+<tr><td>14 параметров на 189 точек — переобучение</td><td><span class="tag">✅</span> Переобучение видно у модели с драйверами (R² выше, ошибка вне выборки хуже) — её отвергли.</td></tr>
+<tr><td>Бэктест на пересмотренных данных</td><td><span class="tag">⚠️</span> Архива старых публикаций нет; месячный ИПЦ пересматривается редко.</td></tr>
+<tr><td>Фонд закупает товары, а не индекс</td><td><span class="tag">⚠️</span> Индекс отвечает «будет ли плохой сезон»; что закупать — разбор по товарам. Прогноза по товарам нет.</td></tr>
+</tbody></table></div>
+<p id="rtOther"><i>Ответы на memo другой команды появятся здесь после обмена на Gate 1.</i></p>
+
+<h2>5. Ограничения — где модель ошибалась и чего не умеет</h2>
+<div class="box warn">
+<b>Главный провал: 2022 год.</b> Прогноз сезона из января — 4,1%, факт — 12,1%. Почти весь промах — март 2022 (прогноз 0,65%, факт 6,1%): война в Украине, санкции, ослабление тенге. В апреле модель уже попала (3,0 против 3,1). Модель ловит продолжение шока, но не его начало.
+</div>
+<ul>
+<li><b>Систематически занижает сезон:</b> в 8 сезонах из 12 факт выше прогноза из октября (медиана +0,61 п.п.) — поэтому правило квантиля 0,75.</li>
+<li><b>Не видит внешних шоков</b> до того, как они попали в ИПЦ.</li>
+<li><b>Из октября не различает сезоны:</b> правило квантиля даёт тревогу всегда (9 из 9) — в октябре продукт рекомендует страховку, а не закупку.</li>
+<li><b>Маленькая выборка:</b> 12 сезонов для квантиля и 16 для порога — оценки грубые.</li>
+<li><b>Не причинная:</b> не отвечает на вопрос «что будет, если стабфонд выпустит запасы».</li>
+<li><b>Не прогнозирует отдельные товары</b> и горизонт больше 6 месяцев.</li>
+</ul>
+<p>Подробнее — <a href="https://github.com/tasmagambetovamaira-commits/food-risk-almaty/blob/main/model/model_card.md">model card</a>.</p>
+
+<h2>6. Литература</h2>
+<p style="font-size:14px">Hyndman & Athanasopoulos, <i>Forecasting: Principles and Practice</i>, 3rd ed. · Gneiting & Raftery (2007), scoring rules · Gelman & Loken (2013), garden of forking paths · Nosek et al. (2018), pre-registration · Mitchell et al. (2019), model cards.</p>
+
+<footer>Данные по <span class="thru">…</span> · сборка <span id="built">…</span> · <a href="index.html">на главную</a></footer>
+</main>
+<script src="artifact.js"></script>
+<script>
+const f = (x, d=2) => x.toFixed(d).replace(".", ",");
+const load = window.ARTIFACT ? Promise.resolve(window.ARTIFACT) : fetch("../model/artifact.json").then(r => r.json());
+load.then(A => {
+  document.querySelectorAll(".thru").forEach(e => e.textContent = A.meta.data_through);
+  document.getElementById("built").textContent = A.meta.built;
+  document.getElementById("phi").textContent = f(A.model.phi);
+  document.getElementById("q75").textContent = f(A.decision.janapr_q75) + "%";
+  const q = A.quality_h1.find(m => m.model === "ar1_seasonal");
+  document.getElementById("cov").textContent = f(q.coverage80 * 100, 0) + "% при номинале 80%";
+}).catch(() => {});
+</script>
+</body>
+</html>
