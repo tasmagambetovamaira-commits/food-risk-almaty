@@ -1,0 +1,4 @@
+model,n,lb3_p,lb12_p,bg3_p,bg12_p,jb_p,arch12_p,passes_lb12,asym_loss_h1
+ar1_seasonal,189,0.5818,0.4672,0.5281,0.3451,0.0,0.9988,True,1.092
+ar1_drivers,187,0.4237,0.7052,0.1899,0.5653,0.0,0.9999,True,1.519
+sarima,177,0.75,0.0932,,,0.0,0.9982,True,1.046

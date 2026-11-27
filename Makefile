@@ -7,6 +7,7 @@ update:
 	$(PY) src/stationarity.py
 	$(PY) src/backtest.py
 	$(PY) src/backtest_models.py
+	$(PY) src/diagnostics.py
 	$(PY) src/export_artifact.py
 	@echo "Готово. Локальный просмотр: make serve -> http://localhost:8000/site/"
 

@@ -19,3 +19,5 @@ We used AI to know if there are enought info for our theme and whether its relev
 **Просили у AI:** скрипт, собирающий model/artifact.json (единственный источник данных для сайта), одностраничный сайт из 7 блоков на чистом HTML/SVG без библиотек, команду make update.
 **Оставили:** export_artifact.py, вёрстку и графики site/index.html, Makefile; копию данных site/artifact.js, чтобы страница открывалась и без сервера.
 **Проверили сами:** [ДОПИСАТЬ] все числа в текстах сайта сверены с outputs/eda_summary.csv, outputs/jan_apr_by_year.csv и model/artifact.json (исправлены подписи к графику товаров, сезонов и «обоих бенчмарков»); make update проходит с нуля; data/raw не меняется.
+
+A15 (27.11.2026): src/diagnostics.py — код тестов Ljung–Box, Breusch–Godfrey, Jarque–Bera, ARCH написал Claude. Мы запустили его сами, сверили p-значения и проверили, что правило выбора совпадает с пререгистрацией §6.
