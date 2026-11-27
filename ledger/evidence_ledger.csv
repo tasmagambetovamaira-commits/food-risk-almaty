@@ -1,0 +1,25 @@
+id,ряд,источник,ссылка,дата_выгрузки,сырой_файл,преобразование,скрипт,где_используется
+L01,ИПЦ продовольственные товары м/м по регионам,БНС (Талдау),https://taldau.stat.gov.kz/ru,2026-11-22,data/raw/taldau_cpi_food_monthly_2026-11-22.xls,—,—,целевой ряд (г. Алматы); запасной (РК)
+L02,ИПЦ картофель м/м по регионам,БНС (Талдау),https://taldau.stat.gov.kz/ru,2026-11-22,data/raw/taldau_cpi_potato_monthly_2026-11-22.xls,—,—,разбор структуры; контракт СПК
+L03,ИПЦ капуста белокочанная м/м по регионам,БНС (Талдау),https://taldau.stat.gov.kz/ru,2026-11-22,data/raw/taldau_cpi_cabbage_monthly_2026-11-22.xls,—,—,разбор структуры; контракт СПК
+L04,ИПЦ лук репчатый м/м по регионам,БНС (Талдау),https://taldau.stat.gov.kz/ru,2026-11-22,data/raw/taldau_cpi_onion_monthly_2026-11-22.xls,—,—,разбор структуры; контракт СПК
+L05,ИПЦ морковь м/м по регионам,БНС (Талдау),https://taldau.stat.gov.kz/ru,2026-11-22,data/raw/taldau_cpi_carrot_monthly_2026-11-22.xls,—,—,разбор структуры; контракт СПК
+L06,ИПЦ сахар м/м по регионам,БНС (Талдау),https://taldau.stat.gov.kz/ru,2026-11-22,data/raw/taldau_cpi_sugar_monthly_2026-11-22.xls,—,—,решение о запасе сахара
+L07,ИПЦ говядина м/м по регионам,БНС (Талдау),https://taldau.stat.gov.kz/ru,2026-11-22,data/raw/taldau_cpi_beef_monthly_2026-11-22.xls,—,—,разбор структуры
+L08,ИПЦ окорочка куриные м/м по регионам,БНС (Талдау),https://taldau.stat.gov.kz/ru,2026-11-22,data/raw/taldau_cpi_chicken_legs_monthly_2026-11-22.xls,—,—,разбор структуры
+L09,ИПЦ яйца (группа) м/м по регионам,БНС (Талдау),https://taldau.stat.gov.kz/ru,2026-11-22,data/raw/taldau_cpi_eggs_monthly_2026-11-22.xls,—,—,разбор структуры
+L10,ИПЦ мука м/м по регионам,БНС (Талдау),https://taldau.stat.gov.kz/ru,2026-11-22,data/raw/taldau_cpi_flour_monthly_2026-11-22.xls,—,—,разбор структуры
+L11,ИПЦ молоко питьевое (группа) м/м по регионам,БНС (Талдау),https://taldau.stat.gov.kz/ru,2026-11-22,data/raw/taldau_cpi_milk_monthly_2026-11-22.xls,—,—,разбор структуры
+L12,ИПЦ масло подсолнечное м/м по регионам,БНС (Талдау),https://taldau.stat.gov.kz/ru,2026-11-22,data/raw/taldau_cpi_sunflower_oil_monthly_2026-11-22.xls,—,—,разбор структуры
+L13,ИПЦ и производные показатели январь 2026,БНС,https://stat.gov.kz/api/iblock/element/281087/file/ru/,2026-11-22,data/raw/T-15-02-M (01 2026) рус.xlsx,—,—,сверка с Талдау
+L14,ИПЦ и производные показатели февраль 2026,БНС,https://stat.gov.kz/api/iblock/element/281451/file/ru/,2026-11-22,data/raw/T-15-02-M (02 2026) рус.xlsx,—,—,сверка с Талдау
+L15,ИПЦ и производные показатели март 2026,БНС,https://stat.gov.kz/api/iblock/element/341259/file/ru/,2026-11-22,data/raw/T-15-02-M (03 2026) рус.xlsx,—,—,сверка с Талдау
+L16,ИПЦ и производные показатели апрель 2026,БНС,https://stat.gov.kz/api/iblock/element/346508/file/ru/,2026-11-22,data/raw/T-15-02-M (04 2026) рус.xlsx,—,—,сверка с Талдау
+L17,ИПЦ и производные показатели май 2026,БНС,https://stat.gov.kz/api/iblock/element/346893/file/ru/,2026-11-22,data/raw/T-15-02-M (05 2026) рус.xlsx,—,—,сверка с Талдау
+L18,ИПЦ и производные показатели июнь 2026,БНС,https://stat.gov.kz/api/iblock/element/347713/file/ru/,2026-11-22,data/raw/T-15-02-M (06 2026) рус.xlsx,—,—,сверка с Талдау
+L19,ИПЦ и производные показатели июль 2026,БНС,https://stat.gov.kz/api/iblock/element/335767/file/ru/,2026-11-22,data/raw/T-15-02-M (07 2026) рус.xlsx,—,—,сверка с Талдау
+L20,ИПЦ и производные показатели август 2026,БНС,https://stat.gov.kz/api/iblock/element/347967/file/ru/,2026-11-22,data/raw/T-15-02-M (08 2026) рус.xlsx,—,—,сверка с Талдау
+L21,ИПЦ и производные показатели сентябрь 2026,БНС,https://stat.gov.kz/api/iblock/element/353607/file/ru/,2026-11-22,data/raw/T-15-02-M (09 2026) рус.xlsx,—,—,сверка с Талдау
+L22,ИПЦ и производные показатели октябрь 2026,БНС,https://stat.gov.kz/api/iblock/element/355083/file/ru/,2026-11-22,data/raw/T-15-02-M (10 2026) рус.xlsx,—,—,сверка с Талдау
+L23,FAO Food Price Index и 5 подиндексов (номинальные м/м),FAO,https://www.fao.org/worldfoodsituation/foodpricesindex/en,2026-11-22,data/raw/fao_food_price_index_monthly_2026-11-22.xlsx,—,—,опережающий ряд
+L24,Официальные курсы USD/KZT и RUB/KZT (дневные),Национальный Банк РК,https://nationalbank.kz/ru/exchangerates/ezhednevnye-oficialnye-rynochnye-kursy-valyut,2026-11-22,data/raw/nbk_usd_rub_kzt_daily_2026-11-22.xlsx,—,—,драйвер; перевод FAO в тенге
