@@ -11,4 +11,14 @@ Food price risk in the off-season: forecast for Almaty stabilization fund
 (появится по мере работы)
 
 ## Команда
-- Anel ...
+- Майра и Айтуар
+## Сайт
+
+**Публичный URL:** https://tasmagambetovamaira-commits.github.io/food-risk-almaty/site/
+
+Архитектура: код в `src/` пишет `model/artifact.json`; сайт `site/index.html` читает только его.
+
+```bash
+make update   # сырые данные -> обработка -> бэктест -> model/artifact.json
+make serve    # открыть http://localhost:8000/site/
+```
