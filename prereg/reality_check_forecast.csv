@@ -1,0 +1,9 @@
+region,model,nov2026_point,nov2026_lo80,nov2026_hi80,janapr2027_point,n_past_errors
+almaty,ar1_seasonal,0.82,0.27,1.59,4.21,153
+almaty,sarima,0.59,-0.1,1.26,2.98,153
+almaty,climatology,0.8,0.3,1.99,3.96,153
+almaty,seasonal_naive,1.4,0.4,2.58,3.96,153
+rk,ar1_seasonal,0.79,0.36,1.28,3.83,153
+rk,sarima,0.42,-0.11,0.89,2.77,153
+rk,climatology,1.0,0.66,1.9,3.91,153
+rk,seasonal_naive,1.0,0.1,1.9,3.54,153
