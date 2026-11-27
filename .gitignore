@@ -170,7 +170,6 @@ conda-meta/
 .ropeproject
 
 # mkdocs/Zensical documentation
-/site
 
 # mypy
 .mypy_cache/

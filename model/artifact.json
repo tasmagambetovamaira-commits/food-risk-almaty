@@ -893,10 +893,6 @@
  ],
  "items": [
   {
-   "item": "Морковь",
-   "janapr_median": 28.77
-  },
-  {
    "item": "Капуста",
    "janapr_median": 22.38
   },
@@ -909,28 +905,32 @@
    "janapr_median": 16.13
   },
   {
+   "item": "Морковь",
+   "janapr_median": 12.38
+  },
+  {
    "item": "Мука",
-   "janapr_median": 10.13
-  },
-  {
-   "item": "Молочные",
-   "janapr_median": 6.86
-  },
-  {
-   "item": "Говядина",
-   "janapr_median": 5.08
-  },
-  {
-   "item": "Яйца",
-   "janapr_median": 4.55
+   "janapr_median": 3.74
   },
   {
    "item": "Сахар",
    "janapr_median": 2.66
   },
   {
+   "item": "Молочные",
+   "janapr_median": 2.62
+  },
+  {
+   "item": "Говядина",
+   "janapr_median": 1.91
+  },
+  {
+   "item": "Яйца",
+   "janapr_median": 1.39
+  },
+  {
    "item": "Окорочка",
-   "janapr_median": -0.0
+   "janapr_median": 0.6
   },
   {
    "item": "Подсолн. масло",

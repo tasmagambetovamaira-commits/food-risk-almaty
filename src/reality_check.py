@@ -11,7 +11,7 @@
 Результат: prereg/reality_check_forecast.csv — эти числа переносятся в prereg/prereg.md.
 
 Запуск: python src/reality_check.py
-AI-assisted: see AI_USE entry A11; reviewed and tested by [имена].
+AI-assisted: see AI_USE entry A11; reviewed and tested by Майра, Айтуар.
 """
 
 from pathlib import Path

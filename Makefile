@@ -1,5 +1,5 @@
 # Одна команда от сырых данных до сайта: make update
-PY ?= python
+PY ?= .venv/bin/python
 
 update:
 	$(PY) src/prepare.py

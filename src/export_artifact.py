@@ -15,7 +15,7 @@
   оценка ar1_seasonal на всей выборке     -> коэффициенты для сценария
 
 Запуск: python src/export_artifact.py
-AI-assisted: see AI_USE entry A14; reviewed and tested by [имена].
+AI-assisted: see AI_USE entry A14; reviewed and tested by Майра, Айтуар.
 """
 
 import json
@@ -102,6 +102,9 @@ def main():
     }
     OUT.parent.mkdir(exist_ok=True)
     OUT.write_text(json.dumps(art, ensure_ascii=False, indent=1), encoding="utf-8")
+    # Копия для сайта: работает и при открытии index.html двойным кликом (file://)
+    Path("site/artifact.js").write_text(
+        "window.ARTIFACT = " + json.dumps(art, ensure_ascii=False) + ";\n", encoding="utf-8")
 
     # Проверки: артефакт согласован с пререгистрацией
     frozen = rc[(rc.region == "almaty") & (rc.model == "ar1_seasonal")].iloc[0]
